@@ -1,58 +1,51 @@
 #!/usr/bin/env node
+
 import { Command } from 'commander';
-import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs/promises';
 import chalk from 'chalk';
+
+const program = new Command();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const themeTemplatePath = path.join(__dirname, '../templates/theme.txt');
-const userCssPath = path.join(process.cwd(), 'app/globals.css');
-const program = new Command();
+
+program
+    .name('modui-uikit')
+    .description('CLI to add components to your project')
+    .version('1.0.1');
 
 program
     .command('add <component>')
+    .description('Add a component to your project')
     .action(async (component) => {
-        const name = component.toLowerCase();
+        const sourcePath = path.resolve(__dirname, '..', 'templates', `${component}.tsx.txt`);
 
-        const templatePath = path.join(__dirname, '../templates', `${name}.tsx.txt`);
-
-        const targetPath = path.join(process.cwd(), 'components/ui', `${name}.tsx`);
-
-        try {
-            if (!(await fs.pathExists(templatePath))) {
-                console.log(chalk.red(`X Template not found at: ${templatePath}`));
-                return;
-            }
-
-            const templateContent = await fs.readFile(templatePath, 'utf8');
-            await fs.ensureDir(path.dirname(targetPath));
-            await fs.writeFile(targetPath, templateContent);
-
-            console.log(chalk.green(`✔ Created ${name}.tsx`));
-        } catch (err) {
-            console.error(err);
-        }
+        const targetDir = path.join(process.cwd(), 'components', 'ui');
+        const targetPath = path.join(targetDir, `${component}.tsx`);
 
         try {
-            const themeContent = await fs.readFile(themeTemplatePath, 'utf8');
+            const componentCode = await fs.readFile(sourcePath, 'utf8');
 
-            let existingCss = "";
-            if (await fs.pathExists(userCssPath)) {
-                existingCss = await fs.readFile(userCssPath, 'utf8');
+            await fs.mkdir(targetDir, { recursive: true });
+
+            await fs.writeFile(targetPath, componentCode);
+
+            console.log(chalk.green(`✔ Success! ${component} added to ${targetPath}`));
+
+            if (componentCode.includes('lucide-react')) {
+                console.log(chalk.blue('ℹ This component requires lucide-react. Ensure it is installed.'));
             }
 
-            if (!existingCss.includes('--primary')) {
-                const formattedTheme = `\n@layer base {\n${themeContent}\n}\n`;
-
-                await fs.appendFile(userCssPath, formattedTheme);
-                console.log(chalk.green("✔ Theme variables injected into globals.css"));
+        } catch (error) {
+            if (error.code === 'ENOENT') {
+                console.error(chalk.red(`\n❌ Error: Component "${component}" not found.`));
+                console.error(chalk.gray(`Looked in: ${sourcePath}`));
+            } else {
+                console.error(chalk.red('\n❌ An unexpected error occurred:'), error.message);
             }
-        } catch (err) {
-            console.error(chalk.red("Could not inject theme:"), err);
         }
-
     });
 
-program.parse();
+program.parse(process.argv);
