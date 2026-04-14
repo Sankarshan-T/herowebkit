@@ -8,12 +8,14 @@ interface CodeBlockProps {
     children: string;
     className?: string;
     language?: string;
+    windowed?: boolean;
 }
 
 export const CodeBlock = ({
     children,
     className,
-    language
+    language,
+    windowed = true,
 }: CodeBlockProps) => {
     const [hasCopied, setHasCopied] = useState(false);
 
@@ -34,11 +36,13 @@ export const CodeBlock = ({
         )}>
             <div className="flex items-center justify-between px-4 py-2 border-b border-slate-100 bg-slate-50/50">
                 <div className="flex items-center gap-2">
-                    <div className="flex gap-1.5 opacity-60">
-                        <div className="h-2.5 w-2.5 rounded-full bg-red-300" />
-                        <div className="h-2.5 w-2.5 rounded-full bg-yellow-300" />
-                        <div className="h-2.5 w-2.5 rounded-full bg-green-300" />
-                    </div>
+                    {windowed && (
+                        <div className="flex gap-1.5 opacity-60">
+                            <div className="h-2.5 w-2.5 rounded-full bg-red-300" />
+                            <div className="h-2.5 w-2.5 rounded-full bg-yellow-300" />
+                            <div className="h-2.5 w-2.5 rounded-full bg-green-300" />
+                        </div>
+                    )}
                     <span className="ml-2 text-[10px] uppercase tracking-wider text-blue-400 font-bold">
                         {language || "code"}
                     </span>
