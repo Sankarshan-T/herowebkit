@@ -7,7 +7,7 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                primary: "bg-primary text-primary-foreground hover:bg-primary/80",
+                primary: "bg-primary text-primary-foreground hover:bg-primary/90",
                 secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
                 outline: "border border-gray-300 bg-transparent hover:bg-gray-100",
                 ghost: "hover:bg-gray-100 hover:text-gray-900",
@@ -31,10 +31,11 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> { }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, size, ...props }, ref) => {
+    ({ className, variant, size, onClick, ...props }, ref) => {
         return (
             <button
                 ref={ref}
+                onClick={onClick}
                 className={cn(buttonVariants({ variant, size, className }))}
                 {...props}
             />

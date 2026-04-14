@@ -15,7 +15,7 @@ export const Link = ({
     className,
 }: LinkProps) => {
     return (
-        <a href={href} className={cn(asChild ? "" : className, "text-decoration-none text-accent-foreground hover:text-accent-foreground/80 transition")}>
+        <a href={href} className={cn(asChild ? "" : "text-decoration-none text-accent-foreground hover:text-accent-foreground/80 transition", className)}>
             {children}
         </a>
     )
