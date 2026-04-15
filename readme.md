@@ -8,3 +8,6 @@ A minimalist, accessible, and highly customizable UI kit built with Next.js and 
 - Make a new file xyzdocs.tsx
 - Add component txt file to cli templates
 - restart dev server
+
+## After addding all needed comps.
+- Republish cli to npm
