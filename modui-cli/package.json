@@ -1,6 +1,6 @@
 {
     "name": "modui-uikit",
-    "version": "1.0.7",
+    "version": "1.1.1",
     "type": "module",
     "bin": {
         "modui": "./bin/cli.js"

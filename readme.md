@@ -1,12 +1,34 @@
 # modUi
+A premium UI kit/library built for React with Tailwind CSS and Lucide React. Designed for repacing the old html components with awesome, new, modern and aesthetic components.
 
-A minimalist, accessible, and highly customizable UI kit built with Next.js and Tailwind CSS.
+| Default HTML components | Default ModUi components |
+| ----------------------- | ------------------------ |
+| ![html button](readimages/image2.png) | ![modUi button](readimages/image.png)
 
-## Items i need to update after each component:
-- Modify preview component
-- restart dev server
-- Modify COMPONENT_DOCS code to add all data for new comp.
-- Add template to cli
+## Features:
+### Add components with ease
+- With the cli command install any component from thee library just by writing less than 1 line of code
+### Fully customizable
+- The components already come with various variants. If you still need to customize more, the code is open source in your components/ui folder.
+### Easy code structure
+- The code is very easy to understand and easy to use.
+### Modernized UI
+- All the components are built mainly for modern ui by eradicate the old looking default html components
 
-## After addding all needed comps.
-- Republish cli to npm
+## Quick start
+- Get started on your next.js project with our components with ease
+### Create next app (skip this if you already have a next app set up):
+```npx create-next-app@latest --yes```
+### Add any component (this shows how to install a button component):
+```npx modui-uikit@latest add button```
+
+## Available components
+- Accordion
+- Badge
+- Button
+- Callout
+- Card
+- Codeblock
+- Input
+- Link 
+- and many more!
